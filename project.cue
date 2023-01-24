@@ -137,7 +137,6 @@ dagger.#Plan & {
 		filesystem: {
 			"./": read: contents:             dagger.#FS
 			"./project.cue": write: contents: actions.format.cue.export.files."/workdir/project.cue"
-			"./": write: contents:            actions.format.pre_commit.export.directories."/lint"
 		}
 	}
 
