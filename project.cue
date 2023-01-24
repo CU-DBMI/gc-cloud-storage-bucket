@@ -3,6 +3,8 @@ package main
 
 import "dagger.io/dagger"
 
+import "universe.dagger.io/bash"
+
 import "universe.dagger.io/docker"
 
 // python build for linting, testing, building, etc.
@@ -189,6 +191,7 @@ dagger.#Plan & {
 		filesystem: {
 			"./": read: contents:             dagger.#FS
 			"./project.cue": write: contents: actions.format.cue.export.files."/workdir/project.cue"
+			"./": write: contents:            actions.format.pre_commit.export.directories."/lint"
 		}
 	}
 	python_version: string | *"3.9"
@@ -227,19 +230,28 @@ dagger.#Plan & {
 					files: "/workdir/project.cue": _
 				}
 			}
+			// run pre-commit checks
+			pre_commit: bash.#Run & {
+				input: _tf_lint_build.output
+				script: contents: """
+					: $(pre-commit run --all-files)
+					"""
+				export: {
+					directories: {"/lint": _}
+				}
+			}
 		}
 
 		// various tests for this repo
 		test: {
 			// run pre-commit checks
-			pre_commit: docker.#Run & {
+			test_pre_commit: docker.#Run & {
 				input: _tf_lint_build.output
 				command: {
 					name: "run"
 					args: ["--all-files"]
 				}
 			}
-
 		}
 	}
 }
