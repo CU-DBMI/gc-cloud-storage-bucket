@@ -1,7 +1,8 @@
 # tf variables
 # project to create the related resources in
 variable "project" {
-  type = string
+  type    = string
+  default = "cuhealthai-sandbox"
 }
 # Region to be used with the project resources
 variable "region" {
@@ -10,11 +11,13 @@ variable "region" {
 }
 # Name for the bucket being created
 variable "bucket_name" {
-  type = string
+  type    = string
+  default = "lab-initiative-bucket"
 }
 # Label for specific initiative
 # useful for differentiating between
 # various resources
 variable "initiative_label" {
-  type = string
+  type    = string
+  default = "lab-initiative"
 }
