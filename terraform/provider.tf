@@ -1,5 +1,8 @@
 # tf provider configuration
 provider "google" {
-  project = "gc-cloud-storage-bucket"
-  region  = "us-central1"
+  project = var.project
+  region  = var.region
+}
+
+data "google_project" "project" {
 }

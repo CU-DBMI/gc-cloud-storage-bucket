@@ -9,9 +9,6 @@ on:
 
 jobs:
   run_tests:
-    strategy:
-      matrix:
-        python_version: [3.9]
     runs-on: ubuntu-latest
     env:
       DAGGER_CACHE_FROM: type=gha,scope=gc-cloud-storage-bucket
@@ -24,4 +21,4 @@ jobs:
         with:
           cmds: |
             project update
-            do test ${{ matrix.python_version }}
+            do test
