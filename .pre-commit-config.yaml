@@ -12,6 +12,11 @@ repos:
       - id: check-added-large-files
       - id: check-toml
       - id: detect-private-key
+  # checking yaml formatting
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
   # checking spelling
   - repo: https://github.com/codespell-project/codespell
     rev: v2.2.2
@@ -21,11 +26,6 @@ repos:
               (?x)^(
                   .*\.lock|.*\.csv
               )$
-  # checking yaml formatting
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.29.0
-    hooks:
-      - id: yamllint
   # linting for terraform
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.77.0

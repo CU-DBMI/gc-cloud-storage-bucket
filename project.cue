@@ -7,84 +7,6 @@ import "universe.dagger.io/bash"
 
 import "universe.dagger.io/docker"
 
-// python build for linting, testing, building, etc.
-#PythonBuild: {
-	// client filesystem
-	filesystem: dagger.#FS
-
-	// python version to use for build
-	python_ver: string | *"3.9"
-
-	// poetry version to use for build
-	poetry_ver: string | *"1.2"
-
-	// container image
-	output: _python_pre_build.output
-
-	// referential build for base python image
-	_python_pre_build: docker.#Build & {
-		steps: [
-			docker.#Pull & {
-				source: "python:" + python_ver
-			},
-			docker.#Run & {
-				command: {
-					name: "mkdir"
-					args: ["/workdir"]
-				}
-			},
-			docker.#Set & {
-				config: {
-					workdir: "/workdir"
-					env: {
-						POETRY_VIRTUALENVS_CREATE: "false"
-					}
-				}
-			},
-			docker.#Copy & {
-				contents: filesystem
-				source:   "./pyproject.toml"
-				dest:     "/workdir/pyproject.toml"
-			},
-			docker.#Copy & {
-				contents: filesystem
-				source:   "./poetry.lock"
-				dest:     "/workdir/poetry.lock"
-			},
-			docker.#Copy & {
-				contents: filesystem
-				source:   "./.pre-commit-config.yaml"
-				dest:     "/workdir/.pre-commit-config.yaml"
-			},
-			docker.#Run & {
-				command: {
-					name: "pip"
-					args: ["install", "--no-cache-dir", "poetry==" + poetry_ver]
-				}
-			},
-			docker.#Run & {
-				command: {
-					name: "poetry"
-					args: ["install", "--no-root", "--no-interaction", "--no-ansi"]
-				}
-			},
-			// init for pre-commit install
-			docker.#Run & {
-				command: {
-					name: "git"
-					args: ["init"]
-				}
-			},
-			docker.#Run & {
-				command: {
-					name: "poetry"
-					args: ["run", "pre-commit", "install-hooks"]
-				}
-			},
-		]
-	}
-}
-
 // Convenience cuelang build for formatting, etc.
 #CueBuild: {
 	// client filesystem
@@ -135,7 +57,7 @@ import "universe.dagger.io/docker"
 	output: _tf_build.output
 
 	// tf build
-	_tf_build: docker.#Build & {
+	_tf_pre_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
 				source: "ghcr.io/antonbabenko/pre-commit-terraform:latest"
@@ -145,10 +67,34 @@ import "universe.dagger.io/docker"
 					workdir: "/lint"
 				}
 			},
+            // git init for pre-commit caching
+			bash.#Run & {
+				script: contents: """
+                    git init
+                """
+			},
 			docker.#Copy & {
+				contents: filesystem
+				source:   "./.pre-commit-config.yaml"
+				dest:     "/lint/.pre-commit-config.yaml"
+			},
+			docker.#Run & {
+				command: {
+					name: "install-hooks"
+				}
+			},
+		]
+	}
+
+	// cue build for actions in this plan
+	_tf_build: docker.#Build & {
+		steps: [
+			docker.#Copy & {
+				input:    _tf_pre_build.output
 				contents: filesystem
 				source:   "./"
 				dest:     "/lint"
+				exclude: ["./.pre-commit-config.yaml"]
 			},
 		]
 	}
@@ -167,7 +113,7 @@ import "universe.dagger.io/docker"
 	_tf_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
-				source: "hashicorp/terraform:latest"
+				source: "hashicorp/terraform:1.3.7"
 			},
 			docker.#Run & {
 				command: {
@@ -194,20 +140,16 @@ dagger.#Plan & {
 			"./": write: contents:            actions.format.pre_commit.export.directories."/lint"
 		}
 	}
-	python_version: string | *"3.9"
-	poetry_version: string | *"1.2"
 
 	actions: {
 
-		// an internal python build for use with other actions
-		_python_build: #PythonBuild & {
-			filesystem: client.filesystem."./".read.contents
-			python_ver: python_version
-			poetry_ver: poetry_version
-		}
-
 		// an internal cue build for formatting/cleanliness
 		_cue_build: #CueBuild & {
+			filesystem: client.filesystem."./".read.contents
+		}
+
+		// an internal terraform build for use with this repo
+		_tf_build: #TerraformBuild & {
 			filesystem: client.filesystem."./".read.contents
 		}
 
@@ -233,6 +175,7 @@ dagger.#Plan & {
 			// run pre-commit checks
 			pre_commit: bash.#Run & {
 				input: _tf_lint_build.output
+				// forced nonzero return so as to complete action
 				script: contents: """
 					: $(pre-commit run --all-files)
 					"""
