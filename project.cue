@@ -172,17 +172,6 @@ dagger.#Plan & {
 					files: "/workdir/project.cue": _
 				}
 			}
-			// run pre-commit checks
-			pre_commit: bash.#Run & {
-				input: _tf_lint_build.output
-				// forced nonzero return so as to complete action
-				script: contents: """
-					: $(pre-commit run --all-files)
-					"""
-				export: {
-					directories: {"/lint": _}
-				}
-			}
 		}
 
 		// various tests for this repo
