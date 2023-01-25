@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "gc-cloud-storage-bucket"
+version = "0.0.1"
+description = "Template for creating Cloud Storage bucket on Google Cloud."
+authors = ["d33bs <dave.bunten@cuanschutz.edu>"]
+license = "BSD-3-Clause license"
+readme = "README.md"
+packages = [{include = "gc_cloud_storage_bucket"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pre-commit = "^3.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
