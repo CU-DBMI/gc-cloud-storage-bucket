@@ -1,4 +1,4 @@
-# Way Lab Data Sync Instructions
+# Data Receiver Sync Instructions
 
 This readme covers how to use [rclone](https://rclone.org/) to interact with data stored in the bucket related to this repository.
 
@@ -11,16 +11,16 @@ This readme covers how to use [rclone](https://rclone.org/) to interact with dat
 
 ## Procedures
 
-The general procedure for gaining access to data stored within a Cloud Storage bucket may be segmented into steps for a __Terraform Administrator__ and a __Way Lab Data Consumer__ (roles are outlined under [the root README.md Roles section](../../README.md#%F0%9F%91%A5-roles)).
+The general procedure for gaining access to data stored within a Cloud Storage bucket may be segmented into steps for a __Terraform Administrator__ and a __Data receiver__ (roles are outlined under [the root README.md Roles section](../../README.md#%F0%9F%91%A5-roles)).
 
 ### 1.) Terraform Administrator Procedure
 
-1. Communicate with Way Lab data consumer about need for Google account.
-1. Add Way Lab data consumer Google account to bucket access as a principal.
+1. Communicate with Data receiver about need for Google account.
+1. Add Data receiver Google account to bucket access as a principal.
    - The principal should have `Storage Object Viewer` and `Storage Legacy Bucket Reader` roles assigned for data full data read access.
-1. Communicate with Way Lab data consumer about data access readiness with their account and the bucket name (for example `waylab-durbinlab-bucket`).
+1. Communicate with Data receiver about data access readiness with their account and the bucket name (for example `waylab-durbinlab-bucket`).
 
-### 2.) Way Lab Data Consumer Procedure
+### 2.) Data receiver Procedure
 
 1. [Install rclone](https://rclone.org/install/).
 1. [Configure rclone with Google Cloud Storage](https://rclone.org/googlecloudstorage/).
