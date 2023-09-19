@@ -14,12 +14,12 @@ Please see the following instructions on uploading data to the Google Cloud buck
 
    - Note: if using a Google account, make sure to authenticate using this account when prompted within the web browser (the terminal will prompt through the browser)
 
-1. Test access to Google Cloud Storage bucket with the configured rclone access using, for example, `rclone ls <configured_name>:waylab-durbinlab-bucket`
+1. Test access to Google Cloud Storage bucket with the configured rclone access using, for example, `rclone ls <configured_name>:lab-initiative-bucket`
 
 1. Synchronize data found within bucket by using [`rclone` commands](https://rclone.org/commands/).
 
    - Please note: many rclone commands are recursive __by default__ with options to disable.
-   - An example with the sync command: `rclone sync <data source>  <configured_name>:waylab-durbinlab-bucket`
+   - An example with the sync command: `rclone sync <data source>  <configured_name>:lab-initiative-bucket`
 
 ### Additional Notes (rclone)
 
@@ -52,6 +52,6 @@ Please reference the following directory tree structure for an example of what t
 ### Additional Notes (gsutil)
 
 - __Alternative data upload path__: if an alternative data upload path is preferred, please reference and update `gsutil_sync.bat` as follows:
-  - Original: `gsutil rsync data gs://waylab-assayworks-bucket`
-  - Updated: `gsutil rsync <new data location> gs://waylab-assayworks-bucket`
+  - Original: `gsutil rsync data gs://lab-initiative-bucket`
+  - Updated: `gsutil rsync <new data location> gs://lab-initiative-bucket`
 - __Additional gsutil rsync options__: additional options for the `gsutil rsync` command may be found from the following link: <https://cloud.google.com/storage/docs/gsutil/commands/rsync>
