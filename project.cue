@@ -60,7 +60,7 @@ import "universe.dagger.io/docker"
 	_tf_pre_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
-				source: "ghcr.io/antonbabenko/pre-commit-terraform:v1.79.1"
+				source: "ghcr.io/antonbabenko/pre-commit-terraform:v1.83.3"
 			},
 			docker.#Set & {
 				config: {
