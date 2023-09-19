@@ -12,12 +12,12 @@ variable "region" {
 # Name for the bucket being created
 variable "bucket_name" {
   type    = string
-  default = "waylab-durbinlab-bucket"
+  default = "lab-initiative-bucket"
 }
 # Label for specific initiative
 # useful for differentiating between
 # various resources
 variable "initiative_label" {
   type    = string
-  default = "waylab-durbinlab"
+  default = "lab-initiative-bucket"
 }
