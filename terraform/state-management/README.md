@@ -1,4 +1,4 @@
-# prep
+# state-management
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -28,8 +28,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Name for the bucket being created | `string` | `"waylab-durbinlab-bucket-state-mgmt"` | no |
-| <a name="input_initiative_label"></a> [initiative\_label](#input\_initiative\_label) | Label for specific initiative useful for differentiating between various resources | `string` | `"waylab-durbinlab"` | no |
+| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Name for the bucket being created | `string` | `"lab-initiative-bucket-state-mgmt"` | no |
+| <a name="input_initiative_label"></a> [initiative\_label](#input\_initiative\_label) | Label for specific initiative useful for differentiating between various resources | `string` | `"lab-initiative-bucket"` | no |
 | <a name="input_project"></a> [project](#input\_project) | tf variables project to create the related resources in | `string` | `"cuhealthai-sandbox"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region to be used with the project resources | `string` | `"us-central1"` | no |
 
