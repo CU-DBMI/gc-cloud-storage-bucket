@@ -41,7 +41,7 @@ See below for steps which are required for installation.
 
 1. Install [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 
-1. Configure Terraform as necessary to your Google Cloud environment.
+1. Configure Terraform as necessary for your Google Cloud environment.
 
 ## :books:Tutorial
 
@@ -49,7 +49,7 @@ See below for brief tutorials on how to implement the work found in this reposit
 
 ### 🎛️ State Management
 
-These steps cover how to store [Terraform state management](https://developer.hashicorp.com/terraform/language/state) files in association with the bucket infrastructure below. Terraform tracks cloud resources it creates as a statefile (`.tfstate`). If multiple people want to manage the same resources at the same time, they all need to have access to the same statefile or else they overwriting or corrupting state data. One option for sharing this statefile is to use a Google Cloud Bucket, which is the option used here.
+These steps cover how to store [Terraform state management](https://developer.hashicorp.com/terraform/language/state) files in association with the bucket infrastructure below. Terraform tracks cloud resources it creates as a statefile (`.tfstate`). If multiple people want to manage the same resources at the same time, they all need to have access to the same statefile or else they risk overwriting or corrupting state data. One option for sharing this statefile is to use a Google Cloud Bucket, which is the option used here.
 
 Note: Terraform cloud state management must be setup before it is referenced as a backend.
 
