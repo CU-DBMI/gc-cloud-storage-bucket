@@ -4,18 +4,18 @@
 flowchart LR
     subgraph upload
       files[("file(s)")]
-      durbinlab["👤 Durbin Lab"]
+      data-provider["👤 Data Provider"]
 
     end
     subgraph download
-      waylab["👤 Way Lab"]
+      data-receiver["👤 Data Receiver"]
       files2[("file(s)")]
     end
     bucket[\"Cloud Storage\n Bucket"/]
     files --> |to| bucket
-    durbinlab --> |uploads| files
+    data-provider --> |uploads| files
     bucket --> |provides\naccess to| files2
-    files2 --> |received by| waylab
+    files2 --> |received by| data-receiver
 
 ```
 
@@ -28,8 +28,8 @@ This repository uses [Terraform](https://developer.hashicorp.com/terraform/intro
 See below for an overview of roles which are important to context for various parts of this repository.
 
 - __Terraform Administrator__: this role involves administrating over cloud resources created with Terraform. Content found under the `terraform` directory and following steps under [Tutorial: Bucket Infrastructure](#%EF%B8%8F-bucket-infrastructure) apply to this role.
-- __Durbin Lab Data Provider__: this role involves using content under `utilties/durbinlab` to synchronize (add, update, or remove) data to the bucket created by a Terraform Administrator. Instructions specific to this role are provided under [`utilities/durbinlab/README.md`](utilities/durbinlab/README.md).
-- __Way Lab Data Consumer__: this role is involved with downloading content from the bucket after it has been uploaded by Durbin Lab. Associated content may be found under [`utilities/waylab/README.md`](utilities/waylab/README.md).
+- __Data Provider__: this role involves using content under `utilties/data-provider` to synchronize (add, update, or remove) data to the bucket created by a Terraform Administrator. Instructions specific to this role are provided under [`utilities/data-provider/README.md`](utilities/data-provider/README.md).
+- __Data Receiver__: this role is involved with downloading content from the bucket after it has been uploaded by the data provider. Associated content may be found under [`utilities/data-receiver/README.md`](utilities/data-receiver/README.md).
 
 ## 🛠️ Install
 
@@ -83,8 +83,8 @@ These steps cover an example of how to use the bucket after creating the surroun
 | <span style="text-align:left;float:left;font-weight:normal;"> ⚠️  Please note: be certain data you upload to Google Cloud abide any data governance or privacy restrictions applicable to your environment. The steps below do not inherently check or validate that data, the bucket, or the Google Cloud environment follow these policies. </span>   |
 |-----------------------------------------|
 
-- Data Upload (Durbin Lab): please see [`utilities/durbinlab/README.md`](utilities/durbinlab/README.md) for more information.
-- Data Download (Way Lab): please see [`utilities/waylab/README.md`](utilities/waylab/README.md) for more information.
+- Data Upload (Data Provider): please see [`utilities/data-provider/README.md`](utilities/data-provider/README.md) for more information.
+- Data Download (Data Receiver): please see [`utilities/data-receiver/README.md`](utilities/data-receiver/README.md) for more information.
 
 ## 🧑‍💻 Development
 
