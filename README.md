@@ -63,7 +63,7 @@ Note: Terraform cloud state management must be setup before it is referenced as 
 
 These steps cover how to control the infrastructure found within this repository.
 
-| <span style="text-align:left;float:left;font-weight:normal;">:exclamation:  Please note: after applying the Terraform code with the steps below, a `service-account.json` file is added to your local directory which contains sensitive data which may enable access to your cloud resources. __This file should not be checked into source control!__</span>   |
+| <span style="text-align:left;float:left;font-weight:normal;">:exclamation:  Please note: after applying the Terraform code with the steps below, a `service-account.json` file is added to your local `/utilities/data-provider` directory which contains sensitive data which may enable access to your cloud resources. __This file should not be checked into source control!__</span>   |
 |-----------------------------------------|
 
 1. Make adjustments to the content as necessary (for example, this readme file).
