@@ -202,3 +202,14 @@ cython_debug/
 # dagger ignores
 cue.mod/pkg
 cue.mod/dagger.*
+
+# data ignores
+*.json
+*.zip
+*.tar.gz
+
+# terraform ignores
+hashicorp/
+
+# tf credential ignore
+utilities/data-provider/service-account.json

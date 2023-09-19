@@ -60,18 +60,18 @@ import "universe.dagger.io/docker"
 	_tf_pre_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
-				source: "ghcr.io/antonbabenko/pre-commit-terraform:latest"
+				source: "ghcr.io/antonbabenko/pre-commit-terraform:v1.83.3"
 			},
 			docker.#Set & {
 				config: {
 					workdir: "/lint"
 				}
 			},
-            // git init for pre-commit caching
+			// git init for pre-commit caching
 			bash.#Run & {
 				script: contents: """
-                    git init
-                """
+					    git init
+					"""
 			},
 			docker.#Copy & {
 				contents: filesystem
@@ -113,7 +113,7 @@ import "universe.dagger.io/docker"
 	_tf_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
-				source: "hashicorp/terraform:1.3.7"
+				source: "hashicorp/terraform:1.4.6"
 			},
 			docker.#Run & {
 				command: {
