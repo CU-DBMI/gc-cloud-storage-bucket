@@ -1,7 +1,7 @@
 # tf backend setup enabling state management bucket
 terraform {
   backend "gcs" {
-    bucket = "lab-initiative-bucket-state-mgmt"
+    bucket = "{{ cookiecutter.project_name }}-state-mgmt"
     prefix = "terraform/state"
   }
 }

@@ -16,9 +16,9 @@
 call gcloud auth activate-service-account --key-file=service-account.json
 
 ::  synchronize data from local directory `./data`
-::  to bucket lab-initiative-bucket
+::  to bucket {{ cookiecutter.project_name }}
 ::  see the following for more details:
 ::  https://cloud.google.com/storage/docs/gsutil/commands/rsync
-call gsutil -m rsync -r data gs://lab-initiative-bucket
+call gsutil -m rsync -r data gs://{{ cookiecutter.project_name }}
 
 pause

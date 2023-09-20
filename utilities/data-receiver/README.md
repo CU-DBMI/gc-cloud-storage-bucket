@@ -18,13 +18,13 @@ The general procedure for gaining access to data stored within a Cloud Storage b
 1. Communicate with Data receiver about need for Google account.
 1. Add Data receiver Google account to bucket access as a principal.
    - The principal should have `Storage Object Viewer` and `Storage Legacy Bucket Reader` roles assigned for data full data read access.
-1. Communicate with Data receiver about data access readiness with their account and the bucket name (for example `lab-initiative-bucket`).
+1. Communicate with Data receiver about data access readiness with their account and the bucket name (for example `{{ cookiecutter.project_name }}`).
 
 ### 2.) Data receiver Procedure
 
 1. [Install rclone](https://rclone.org/install/).
 1. [Configure rclone with Google Cloud Storage](https://rclone.org/googlecloudstorage/).
-1. Test access to Google Cloud Storage bucket with the configured rclone access using, for example, `rclone ls <configured_name>:lab-initiative-bucket`
+1. Test access to Google Cloud Storage bucket with the configured rclone access using, for example, `rclone ls <configured_name>:{{ cookiecutter.project_name }}`
 1. Download or synchronize data found within bucket by using [`rclone` commands](https://rclone.org/commands/).
    - Please note: many rclone commands are recursive __by default__ with options to disable.
-   - An example with the copy command: `rclone copy <configured_name>:lab-initiative-bucket`
+   - An example with the copy command: `rclone copy <configured_name>:{{ cookiecutter.project_name }}`

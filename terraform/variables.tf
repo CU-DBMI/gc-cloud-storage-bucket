@@ -2,22 +2,22 @@
 # project to create the related resources in
 variable "project" {
   type    = string
-  default = "cuhealthai-sandbox"
+  default = "{{ cookiecutter.project_gc_project }}"
 }
 # Region to be used with the project resources
 variable "region" {
   type    = string
-  default = "us-central1"
+  default = "{{ cookiecutter.project_gc_region }}"
 }
 # Name for the bucket being created
 variable "bucket_name" {
   type    = string
-  default = "lab-initiative-bucket"
+  default = "{{ cookiecutter.project_name }}"
 }
 # Label for specific initiative
 # useful for differentiating between
 # various resources
 variable "initiative_label" {
   type    = string
-  default = "lab-initiative"
+  default = "{{ cookiecutter.project_name }}"
 }
