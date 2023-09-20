@@ -104,11 +104,11 @@ import "universe.dagger.io/docker"
 
 					# remove already existing test content
 					rm -rf ./tests/lab-initiative-bucket
-					
+
 					# install poetry and env
 					python3 -m pip install --no-cache-dir --upgrade poetry
 					poetry install --no-interaction --no-ansi
-					
+
 					# run cookiecutter to create project from template
 					poetry run cookiecutter . --no-input --output-dir tests
 
