@@ -213,6 +213,3 @@ hashicorp/
 
 # tf credential ignore
 utilities/data-provider/service-account.json
-
-# tests
-tests/

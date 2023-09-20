@@ -1,4 +1,4 @@
-# Template: Google Cloud - Cloud Storage Bucket
+# Google Cloud - Cloud Storage Bucket - {{ cookiecutter.project_name }}
 
 ```mermaid
 flowchart LR
