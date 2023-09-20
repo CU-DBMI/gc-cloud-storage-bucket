@@ -1,6 +1,6 @@
 ---
 # note: this workflow definition will create a project from
-# the cookiecutter template to test the results
+# the cookiecutter template to test the results through dagger
 name: run tests
 
 on:
