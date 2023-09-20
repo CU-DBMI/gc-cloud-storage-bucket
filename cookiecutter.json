@@ -1,5 +1,8 @@
 {
     "project_name": "lab-initiative-bucket",
+    "project_description": "Project for creating and managing a Cloud Storage bucket on Google Cloud.",
+    "project_author": "Username",
+    "project_license": "BSD-3-Clause License",
     "project_gc_project": "cuhealthai-sandbox",
     "project_gc_region": "us-central1"
 }
