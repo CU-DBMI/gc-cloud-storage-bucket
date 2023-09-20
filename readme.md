@@ -23,7 +23,7 @@ This project is a [Cookiecutter](https://github.com/cookiecutter/cookiecutter) t
 
 The template uses [Terraform](https://developer.hashicorp.com/terraform/intro) to maintain cloud resources. See Terraform readme's under the `terraform` directory for documentation on Terraform elements.
 
-## Using the template
+## ✍️ Using the template
 
 Install the latest version of Cookiecutter:
 
