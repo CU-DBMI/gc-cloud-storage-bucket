@@ -32,6 +32,10 @@ jobs:
         run: cd tests/lab-initiative-bucket
       - name: Simulate git for pre-commit checks
         run: |
+          # set username and email
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          # init and add all content to be checked
           git init
           git add .
           git commit -m "A commit to perform pre-commit checks"
