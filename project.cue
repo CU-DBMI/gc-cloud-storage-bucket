@@ -89,7 +89,7 @@ import "universe.dagger.io/docker"
 	// cue build for actions in this plan
 	_tf_build: docker.#Build & {
 		steps: [
-			
+
 			docker.#Copy & {
 				input:    _tf_pre_build.output
 				contents: filesystem
@@ -120,7 +120,6 @@ import "universe.dagger.io/docker"
 	}
 
 }
-
 
 dagger.#Plan & {
 
