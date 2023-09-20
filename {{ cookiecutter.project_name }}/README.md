@@ -19,7 +19,7 @@ flowchart LR
 
 ```
 
-Template for creating [Cloud Storage](https://cloud.google.com/storage/) bucket on [Google Cloud](https://cloud.google.com/) with a service account and related key to enable data or file upload and use.
+Template leveraging [Cookiecutter](https://github.com/cookiecutter/cookiecutter) for creating [Cloud Storage](https://cloud.google.com/storage/) bucket on [Google Cloud](https://cloud.google.com/) with a service account and related key to enable data or file upload and use.
 
 This repository uses [Terraform](https://developer.hashicorp.com/terraform/intro) to maintain cloud resources. See [terraform/README.md](terraform/README.md) for documentation on Terraform elements.
 
@@ -54,7 +54,7 @@ These steps cover how to store [Terraform state management](https://developer.ha
 Note: Terraform cloud state management must be setup before it is referenced as a backend.
 
 1. Make adjustments to the content as necessary (for example, this readme file).
-1. Fill in [terraform/state-management/variables.tf](terraform/variables.tf) with values that make sense for your initiative.
+1. Fill in [variables.tfvars](variables.tfvars) with values that make sense for your initiative (note: these are by default filled in from cookiecutter values).
 1. Terraform __init__: to ensure Terraform is initialized use command `terraform -chdir=terraform/state-management init`.
 1. Terraform __plan__: to plan the work and observe any needs use command `terraform -chdir=terraform/state-management plan` .
 1. Terraform __apply__: to apply the work and create resources use command `terraform -chdir=terraform/state-management apply`
@@ -67,7 +67,7 @@ These steps cover how to control the infrastructure found within this repository
 |-----------------------------------------|
 
 1. Make adjustments to the content as necessary (for example, this readme file).
-1. Fill in [terraform/operations/variables.tf](terraform/variables.tf) with values that make sense for your initiative.
+1. Fill in [variables.tfvars](variables.tfvars) with values that make sense for your initiative (note: these are by default filled in from cookiecutter values).
 1. Terraform __init__: to ensure Terraform is initialized use command `terraform -chdir=terraform/operations init`.
 1. Terraform __plan__: to plan the work and observe any needs use command `terraform -chdir=terraform/operations plan` .
 1. Terraform __apply__: to apply the work and create resources use command `terraform -chdir=terraform/operations apply`
