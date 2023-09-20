@@ -47,3 +47,19 @@ Development for this repository is assisted by the following technologies:
   - [tflint](https://github.com/terraform-linters/tflint): Used to perform static analysis (linting) on Terraform content.
   - [tfsec](https://github.com/aquasecurity/tfsec): Used to perform security-focused static analysis (security linting) on Terraform content.
 - [Dagger](https://docs.dagger.io/): Used to help orchestrate reproducible testing within local development environment and for automated testing.
+
+### Testing
+
+Tests for this project help ensure projects implemented from the Cookiecutter template function as expected.
+These tests automatically will use the content found under the directory `{{ cookiecutter.project_name }}` to create a project and check the content.
+Use [`dagger-cue`](https://docs.dagger.io/sdk/cue/) to run the tests.
+These tests are also used by a Github Actions workflow to perform the same checks.
+
+Example test command:
+
+```shell
+# update dagger project (only if needed)
+dagger-cue project update
+# run the tests
+dagger-cue do test
+```
