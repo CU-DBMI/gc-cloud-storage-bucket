@@ -1,23 +1,20 @@
 # tf variables
-# project to create the related resources in
 variable "project" {
-  type    = string
-  default = "{{ cookiecutter.project_gc_project }}"
+  description = "Google Cloud project to create the related resources in."
+  type        = string
 }
-# Region to be used with the project resources
+
 variable "region" {
-  type    = string
-  default = "{{ cookiecutter.project_gc_region }}"
+  description = "Google Cloud region to be used with the project resources"
+  type        = string
 }
-# Name for the bucket being created
+
 variable "bucket_name" {
-  type    = string
-  default = "{{ cookiecutter.project_name }}-state-mgmt"
+  description = "Name for the bucket being created."
+  type        = string
 }
-# Label for specific initiative
-# useful for differentiating between
-# various resources
+
 variable "initiative_label" {
-  type    = string
-  default = "{{ cookiecutter.project_name }}"
+  description = "Label for specific initiative useful for differentiating between various resources."
+  type        = string
 }
