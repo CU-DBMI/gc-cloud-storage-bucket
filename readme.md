@@ -28,7 +28,6 @@ The template uses [Terraform](https://developer.hashicorp.com/terraform/intro) t
 Install the latest version of Cookiecutter:
 
 ```shell
-# for example
 pip install cookiecutter
 ```
 
@@ -37,3 +36,14 @@ Generate a Python package project from the template in this repository:
 ```shell
 python -m cookiecutter https://github.com/CU-DBMI/gc-cloud-storage-bucket.git
 ```
+
+## 🧑‍💻 Development
+
+Development for this repository is assisted by the following technologies:
+
+- [Poetry](https://python-poetry.org/docs/): Used to help configure pre-commit for local development work.
+- [Pre-commit](https://pre-commit.com): Used for performing checks within local development environment and via Github Actions automated testing. The following sub-items are used as checks through [pre-commit-terraform](https://github.com/antonbabenko/pre-commit-terraform) and require local installation when testing outside of Dagger:
+  - [terraform_docs](https://github.com/terraform-docs/terraform-docs/): Used to automatically generate Terraform-specific documentation.
+  - [tflint](https://github.com/terraform-linters/tflint): Used to perform static analysis (linting) on Terraform content.
+  - [tfsec](https://github.com/aquasecurity/tfsec): Used to perform security-focused static analysis (security linting) on Terraform content.
+- [Dagger](https://docs.dagger.io/): Used to help orchestrate reproducible testing within local development environment and for automated testing.
