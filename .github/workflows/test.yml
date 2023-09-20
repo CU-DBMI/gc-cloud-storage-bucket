@@ -28,8 +28,13 @@ jobs:
         run: poetry install --no-interaction --no-ansi
       - name: Create cookiecutter project with defaults
         run: poetry run cookiecutter . --no-input --output-dir tests
-      - name: Change dir into the tests dir
-        run: cd tests
+      - name: Change dir into the testing dir
+        run: cd tests/lab-initiative-bucket
+      - name: Simulate git for pre-commit checks
+        run: |
+          git init
+          git add .
+          git commit -m "A commit to perform pre-commit checks"
       - name: Dagger
         uses: dagger/dagger-for-github@v4
         with:
