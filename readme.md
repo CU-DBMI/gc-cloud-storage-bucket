@@ -52,6 +52,7 @@ Development for this repository is assisted by the following technologies:
 
 Tests for this project help ensure projects implemented from the Cookiecutter template function as expected.
 These tests automatically will use the content found under the directory `{{ cookiecutter.project_name }}` to create a project and check the content.
+
 Use [`dagger-cue`](https://docs.dagger.io/sdk/cue/) to run the tests.
 These tests are also used by a Github Actions workflow to perform the same checks.
 
