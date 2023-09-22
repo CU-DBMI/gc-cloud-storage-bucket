@@ -15,6 +15,7 @@ repos:
       - id: check-added-large-files
       - id: check-toml
       - id: detect-private-key
+        exclude: "tests/data/gcp-mock-credentials.json"
   # checking yaml formatting
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.32.0
