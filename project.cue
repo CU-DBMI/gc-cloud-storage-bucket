@@ -165,7 +165,7 @@ dagger.#Plan & {
 
 						# initialize terraform for plan
 						terraform -chdir=terraform/state-management init
-						
+
 						# run plan without explicit input from cli
 						# note: we expect variables to be inherited from terraform.tfvars or similar
 						# this command will fail when unable to read a related tfvars file
