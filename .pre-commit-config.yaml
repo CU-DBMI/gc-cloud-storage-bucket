@@ -34,8 +34,4 @@ repos:
     rev: 0.7.17
     hooks:
       - id: mdformat
-        exclude: >
-                (?x)^(
-                    {{ cookiecutter.project_name }}/terraform/.* |
-                    {{ cookiecutter.project_name }}/terraform/.*/.*
-                )$
+        exclude: "{{ cookiecutter.project_name }}/.*/.*"
