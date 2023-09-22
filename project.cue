@@ -67,24 +67,7 @@ import "universe.dagger.io/docker"
 					workdir: "/lint"
 				}
 			},
-			// git init for pre-commit caching
-			bash.#Run & {
-				script: contents: """
-						git config --global user.email "you@example.com"
-						git config --global user.name "Your Name"
-					    git init
-					"""
-			},
-			docker.#Copy & {
-				contents: filesystem
-				source:   "./{{ cookiecutter.project_name }}/.pre-commit-config.yaml"
-				dest:     "/lint/.pre-commit-config.yaml"
-			},
-			docker.#Run & {
-				command: {
-					name: "install-hooks"
-				}
-			},
+
 			docker.#Copy & {
 				contents: filesystem
 				source:   "./"
@@ -106,13 +89,16 @@ import "universe.dagger.io/docker"
 					poetry run cookiecutter . --no-input --output-dir tests
 
 					# move project from template into lintable dir for container
-					cp -r /workdir/tests/lab-initiative-bucket/* /lint
+					cp -ra /workdir/tests/lab-initiative-bucket/. /lint
 
 					# reinit git for the cookiecutter project
 					rm -rf /lint/.git
 					cd /lint
+					git config --global user.email "you@example.com"
+					git config --global user.name "Your Name"
 					git init
 					git add .
+					git commit -m "example message"
 					"""
 			},
 		]
@@ -157,19 +143,19 @@ dagger.#Plan & {
 			}
 		}
 
-		test: {
 			// run pre-commit checks
-			test_pre_commit: docker.#Run & {
+			test_pre_commit: bash.#Run & {
 				input: _tf_lint_build.output
-				command: {
-					name: "run"
-					args: ["--all-files"]
-				}
+				script: contents: """
+					ls -la /lint/terraform/operations
+					cd /lint
+					pre-commit run -a
+				"""
 			}
 
 			// run pre-commit checks
 			test_tfvars: bash.#Run & {
-				input: test_pre_commit.output
+				input: _tf_lint_build.output
 				script: contents: """
 						# change dir to where the cookiecutter created project lives
 						cd /lint
@@ -191,4 +177,4 @@ dagger.#Plan & {
 		}
 
 	}
-}
+
