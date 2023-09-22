@@ -57,7 +57,7 @@ import "universe.dagger.io/docker"
 	output: _tf_build.output
 
 	// tf build
-	_tf_pre_build: docker.#Build & {
+	_tf_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
 				source: "ghcr.io/antonbabenko/pre-commit-terraform:v1.83.3"
@@ -70,12 +70,14 @@ import "universe.dagger.io/docker"
 			// git init for pre-commit caching
 			bash.#Run & {
 				script: contents: """
+						git config --global user.email "you@example.com"
+						git config --global user.name "Your Name"
 					    git init
 					"""
 			},
 			docker.#Copy & {
 				contents: filesystem
-				source:   "./.pre-commit-config.yaml"
+				source:   "./{{ cookiecutter.project_name }}/.pre-commit-config.yaml"
 				dest:     "/lint/.pre-commit-config.yaml"
 			},
 			docker.#Run & {
@@ -83,19 +85,10 @@ import "universe.dagger.io/docker"
 					name: "install-hooks"
 				}
 			},
-		]
-	}
-
-	// cue build for actions in this plan
-	_tf_build: docker.#Build & {
-		steps: [
-
 			docker.#Copy & {
-				input:    _tf_pre_build.output
 				contents: filesystem
 				source:   "./"
 				dest:     "/workdir"
-				exclude: ["./.pre-commit-config.yaml"]
 			},
 			bash.#Run & {
 				script: contents: """
@@ -113,7 +106,13 @@ import "universe.dagger.io/docker"
 					poetry run cookiecutter . --no-input --output-dir tests
 
 					# move project from template into lintable dir for container
-					cp -r /workdir/tests/lab-initiative-bucket /lint
+					cp -r /workdir/tests/lab-initiative-bucket/* /lint
+
+					# reinit git for the cookiecutter project
+					rm -rf /lint/.git
+					cd /lint
+					git init
+					git add .
 					"""
 			},
 		]
@@ -158,7 +157,6 @@ dagger.#Plan & {
 			}
 		}
 
-		// various tests for this repo
 		test: {
 			// run pre-commit checks
 			test_pre_commit: docker.#Run & {
@@ -168,6 +166,29 @@ dagger.#Plan & {
 					args: ["--all-files"]
 				}
 			}
+
+			// run pre-commit checks
+			test_tfvars: bash.#Run & {
+				input: test_pre_commit.output
+				script: contents: """
+						# change dir to where the cookiecutter created project lives
+						cd /lint
+
+						# set terraform to use mock credentials for testing
+						export GOOGLE_APPLICATION_CREDENTIALS=/workdir/tests/data/gcp-mock-credentials.json
+
+						# initialize terraform for plan
+						terraform -chdir=terraform/state-management init
+						
+						# run plan without explicit input from cli
+						# note: we expect variables to be inherited from terraform.tfvars or similar
+						# this command will fail when unable to read a related tfvars file
+						# see the following for more info:
+						# https://developer.hashicorp.com/terraform/language/values/variables#variable-definition-precedence
+						terraform -chdir=terraform/state-management plan -input=false
+					"""
+			}
 		}
+
 	}
 }
