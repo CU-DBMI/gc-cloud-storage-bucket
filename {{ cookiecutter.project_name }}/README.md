@@ -43,7 +43,7 @@ See below for steps which are required for installation.
 
 1. Configure Terraform as necessary for your Google Cloud environment.
 
-## :books:Tutorial
+## :books: Tutorial
 
 See below for brief tutorials on how to implement the work found in this repository for your needs.
 
@@ -54,7 +54,7 @@ These steps cover how to store [Terraform state management](https://developer.ha
 Note: Terraform cloud state management must be setup before it is referenced as a backend.
 
 1. Make adjustments to the content as necessary (for example, this readme file).
-1. Fill in [variables.tfvars](variables.tfvars) with values that make sense for your initiative (note: these are by default filled in from cookiecutter values).
+1. Fill in [terraform.tfvars](terraform/state-management/terraform.tfvars) with values that make sense for your initiative (note: these are by default filled in from cookiecutter values).
 1. Terraform __init__: to ensure Terraform is initialized use command `terraform -chdir=terraform/state-management init`.
 1. Terraform __plan__: to plan the work and observe any needs use command `terraform -chdir=terraform/state-management plan` .
 1. Terraform __apply__: to apply the work and create resources use command `terraform -chdir=terraform/state-management apply`
@@ -67,7 +67,7 @@ These steps cover how to control the infrastructure found within this repository
 |-----------------------------------------|
 
 1. Make adjustments to the content as necessary (for example, this readme file).
-1. Fill in [variables.tfvars](variables.tfvars) with values that make sense for your initiative (note: these are by default filled in from cookiecutter values).
+1. Fill in [terraform.tfvars](terraform/operations/terraform.tfvars) with values that make sense for your initiative (note: these are by default filled in from cookiecutter values).
 1. Terraform __init__: to ensure Terraform is initialized use command `terraform -chdir=terraform/operations init`.
 1. Terraform __plan__: to plan the work and observe any needs use command `terraform -chdir=terraform/operations plan` .
 1. Terraform __apply__: to apply the work and create resources use command `terraform -chdir=terraform/operations apply`
