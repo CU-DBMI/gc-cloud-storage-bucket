@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "gc-cloud-storage-bucket"
+name = "{{ cookiecutter.project_name }}"
 version = "0.0.1"
-description = "Template for creating Cloud Storage bucket on Google Cloud."
-authors = ["d33bs <dave.bunten@cuanschutz.edu>"]
-license = "BSD-3-Clause License"
+description = "{{ cookiecutter.project_description }}"
+authors = ["{{ cookiecutter.project_author }}"]
+license = "{{ cookiecutter.project_license }}"
 readme = "README.md"
 
 [tool.poetry.dependencies]

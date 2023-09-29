@@ -5,7 +5,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.4.6 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.5.7 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.83.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.4.0 |
 
@@ -35,10 +35,10 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Name for the bucket being created | `string` | `"lab-initiative-bucket"` | no |
-| <a name="input_initiative_label"></a> [initiative\_label](#input\_initiative\_label) | Label for specific initiative useful for differentiating between various resources | `string` | `"lab-initiative-bucket"` | no |
-| <a name="input_project"></a> [project](#input\_project) | tf variables project to create the related resources in | `string` | `"cuhealthai-sandbox"` | no |
-| <a name="input_region"></a> [region](#input\_region) | Region to be used with the project resources | `string` | `"us-central1"` | no |
+| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Name for the bucket being created. | `string` | n/a | yes |
+| <a name="input_initiative_label"></a> [initiative\_label](#input\_initiative\_label) | Label for specific initiative useful for differentiating between various resources. | `string` | n/a | yes |
+| <a name="input_project"></a> [project](#input\_project) | Google Cloud project to create the related resources in. | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | Google Cloud region to be used with the project resources | `string` | n/a | yes |
 
 ## Outputs
 

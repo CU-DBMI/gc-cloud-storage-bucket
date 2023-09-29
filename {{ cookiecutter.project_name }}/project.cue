@@ -57,7 +57,7 @@ import "universe.dagger.io/docker"
 	output: _tf_build.output
 
 	// tf build
-	_tf_build: docker.#Build & {
+	_tf_pre_build: docker.#Build & {
 		steps: [
 			docker.#Pull & {
 				source: "ghcr.io/antonbabenko/pre-commit-terraform:v1.83.3"
@@ -67,39 +67,64 @@ import "universe.dagger.io/docker"
 					workdir: "/lint"
 				}
 			},
+			// git init for pre-commit caching
+			bash.#Run & {
+				script: contents: """
+					    git init
+					"""
+			},
+			docker.#Copy & {
+				contents: filesystem
+				source:   "./.pre-commit-config.yaml"
+				dest:     "/lint/.pre-commit-config.yaml"
+			},
+			docker.#Run & {
+				command: {
+					name: "install-hooks"
+				}
+			},
+		]
+	}
 
+	// cue build for actions in this plan
+	_tf_build: docker.#Build & {
+		steps: [
+			docker.#Copy & {
+				input:    _tf_pre_build.output
+				contents: filesystem
+				source:   "./"
+				dest:     "/lint"
+				exclude: ["./.pre-commit-config.yaml"]
+			},
+		]
+	}
+
+}
+
+// Convenience terraform build for implementation
+#TerraformBuild: {
+	// client filesystem
+	filesystem: dagger.#FS
+
+	// output from the build
+	output: _tf_build.output
+
+	// tf build
+	_tf_build: docker.#Build & {
+		steps: [
+			docker.#Pull & {
+				source: "hashicorp/terraform:1.4.6"
+			},
+			docker.#Run & {
+				command: {
+					name: "mkdir"
+					args: ["/workdir"]
+				}
+			},
 			docker.#Copy & {
 				contents: filesystem
 				source:   "./"
-				dest:     "/workdir"
-			},
-			bash.#Run & {
-				script: contents: """
-					# cd into the workdir
-					cd /workdir
-
-					# remove already existing test content
-					rm -rf ./tests/lab-initiative-bucket
-
-					# install poetry and env
-					python3 -m pip install --no-cache-dir --upgrade poetry
-					poetry install --no-interaction --no-ansi
-
-					# run cookiecutter to create project from template
-					poetry run cookiecutter . --no-input --output-dir tests
-
-					# move project from template into lintable dir for container
-					cp -ra /workdir/tests/lab-initiative-bucket/. /lint
-
-					# reinit git for the cookiecutter project
-					rm -rf /lint/.git
-					cd /lint
-					git config --global user.email "you@example.com"
-					git config --global user.name "Your Name"
-					git init
-					git add .
-					git commit -m "example message"
-					"""
+				dest:     "/workdir/"
 			},
 		]
 	}
@@ -119,6 +144,11 @@ dagger.#Plan & {
 
 		// an internal cue build for formatting/cleanliness
 		_cue_build: #CueBuild & {
+			filesystem: client.filesystem."./".read.contents
+		}
+
+		// an internal terraform build for use with this repo
+		_tf_build: #TerraformBuild & {
 			filesystem: client.filesystem."./".read.contents
 		}
 
@@ -143,38 +173,16 @@ dagger.#Plan & {
 			}
 		}
 
+		// various tests for this repo
 		test: {
 			// run pre-commit checks
-			test_pre_commit: bash.#Run & {
+			test_pre_commit: docker.#Run & {
 				input: _tf_lint_build.output
-				script: contents: """
-						pre-commit run -a
-					"""
-			}
-
-			// run pre-commit checks
-			test_tfvars: bash.#Run & {
-				input: _tf_lint_build.output
-				script: contents: """
-						# change dir to where the cookiecutter created project lives
-						# to simulate the use of the directory after it's been used
-						cd /lint
-
-						# set terraform to use mock credentials for testing
-						export GOOGLE_APPLICATION_CREDENTIALS=/workdir/tests/data/gcp-mock-credentials.json
-
-						# initialize terraform for plan
-						terraform -chdir=terraform/state-management init
-
-						# run plan without explicit input from cli
-						# note: we expect variables to be inherited from terraform.tfvars or similar
-						# this command will fail when unable to read a related tfvars file
-						# see the following for more info:
-						# https://developer.hashicorp.com/terraform/language/values/variables#variable-definition-precedence
-						terraform -chdir=terraform/state-management plan -input=false
-					"""
+				command: {
+					name: "run"
+					args: ["--all-files"]
+				}
 			}
 		}
 	}
-
 }
