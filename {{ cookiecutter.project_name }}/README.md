@@ -28,7 +28,7 @@ This repository uses [Terraform](https://developer.hashicorp.com/terraform/intro
 See below for an overview of roles which are important to context for various parts of this repository.
 
 - __Terraform Administrator__: this role involves administrating over cloud resources created with Terraform. Content found under the `terraform` directory and following steps under [Tutorial: Bucket Infrastructure](#%EF%B8%8F-bucket-infrastructure) apply to this role.
-- __Data Provider__: this role involves using content under `utilties/data-provider` to synchronize (add, update, or remove) data to the bucket created by a Terraform Administrator. Instructions specific to this role are provided under [`utilities/data-provider/README.md`](utilities/data-provider/README.md).
+- __Data Provider__: this role involves using content under `utilities/data-provider` to synchronize (add, update, or remove) data to the bucket created by a Terraform Administrator. Instructions specific to this role are provided under [`utilities/data-provider/README.md`](utilities/data-provider/README.md).
 - __Data Receiver__: this role is involved with downloading content from the bucket after it has been uploaded by the data provider. Associated content may be found under [`utilities/data-receiver/README.md`](utilities/data-receiver/README.md).
 
 ## 🛠️ Install
